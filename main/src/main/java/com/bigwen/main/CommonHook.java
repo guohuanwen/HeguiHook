@@ -20,7 +20,6 @@ public class CommonHook extends XC_MethodHook {
     }
 
     public static void dump(String msg){
-        Log.i(TAG, msg + "Dump Stack: \"+\"---------------start----------------");
         Throwable ex = new Throwable();
         StackTraceElement[] stackElements = ex.getStackTrace();
         if (stackElements != null) {
@@ -33,6 +32,5 @@ public class CommonHook extends XC_MethodHook {
                         +"----" +stackElements[i].getMethodName());
             }
         }
-        Log.i(TAG, msg + "Dump Stack: \"+\"---------------over----------------");
     }
 }
