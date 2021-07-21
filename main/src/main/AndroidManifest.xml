@@ -82,6 +82,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name="com.bigwen.main.MainActicity1"
+            android:process=":child"/>
     </application>
 
 </manifest>

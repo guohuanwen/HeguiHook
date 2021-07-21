@@ -5,21 +5,34 @@ import de.robv.android.xposed.XC_MethodHook;
 
 public class CommonHook extends XC_MethodHook {
 
-    private String TAG = "XposedBridge";
+    private static final String TAG = "XposedBridge";
 
     @Override
     protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
         super.beforeHookedMethod(param);
-        Log.i(TAG, "beforeHookedMethod: " + param.method.getName());
-        for (Object obj: param.args){
-            Log.i(TAG, "beforeHookedMethod: param " + obj);
-        }
+        Log.i(TAG, "invoke method " + param.thisObject.getClass().getName() + "." + param.method.getName());
     }
 
     @Override
     protected void afterHookedMethod(MethodHookParam param) throws Throwable {
         super.afterHookedMethod(param);
-//        DumpMethodHook.dump2();
-        Log.i(TAG, "afterHookedMethod: " + param.method.getName());
+        dump(param.thisObject.getClass().getName() + "." + param.method.getName());
+    }
+
+    public static void dump(String msg){
+        Log.i(TAG, msg + "Dump Stack: \"+\"---------------start----------------");
+        Throwable ex = new Throwable();
+        StackTraceElement[] stackElements = ex.getStackTrace();
+        if (stackElements != null) {
+            for (int i= 0; i < stackElements.length; i++) {
+                StringBuilder sb=new StringBuilder("[方法栈调用]");
+                sb.append(i);
+                Log.e(TAG, "[Dump Stack]"+i+": "+ stackElements[i].getClassName()
+                        +"----"+stackElements[i].getFileName()
+                        +"----" + stackElements[i].getLineNumber()
+                        +"----" +stackElements[i].getMethodName());
+            }
+        }
+        Log.i(TAG, msg + "Dump Stack: \"+\"---------------over----------------");
     }
 }
