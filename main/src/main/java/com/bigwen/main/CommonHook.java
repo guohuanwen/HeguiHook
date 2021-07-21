@@ -32,5 +32,6 @@ public class CommonHook extends XC_MethodHook {
                         +"----" +stackElements[i].getMethodName());
             }
         }
+        Log.e(TAG, "\n");
     }
 }
