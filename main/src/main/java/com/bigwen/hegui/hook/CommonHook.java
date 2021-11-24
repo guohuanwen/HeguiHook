@@ -1,4 +1,4 @@
-package com.bigwen.main;
+package com.bigwen.hegui.hook;
 
 import android.util.Log;
 import de.robv.android.xposed.XC_MethodHook;
@@ -16,7 +16,19 @@ public class CommonHook extends XC_MethodHook {
     @Override
     protected void afterHookedMethod(MethodHookParam param) throws Throwable {
         super.afterHookedMethod(param);
-        dump(param.thisObject.getClass().getName() + "." + param.method.getName());
+        String[] paramList = new String[param.args.length];
+        if (param.args.length > 0) {
+            for (int i = 0; i < param.args.length; i++) {
+                paramList[i] = param.args[i].toString();
+            }
+        }
+        InvokeInfo info = new InvokeInfo(
+                param.thisObject.getClass().getName(),
+                param.method.getName(),
+                paramList,
+                new Throwable().getStackTrace());
+        HookUtil.sendBroadcast(info);
+//        dump(param.thisObject.getClass().getName() + "." + param.method.getName());
     }
 
     public static void dump(String msg){

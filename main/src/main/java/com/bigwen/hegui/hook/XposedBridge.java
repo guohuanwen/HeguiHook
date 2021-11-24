@@ -1,41 +1,55 @@
-package com.bigwen.main;
+package com.bigwen.hegui.hook;
 
+import static de.robv.android.xposed.XposedHelpers.findAndHookMethod;
+import static de.robv.android.xposed.XposedHelpers.findClass;
+
+import android.app.Application;
 import android.content.ContentResolver;
+import android.content.Context;
 import android.location.LocationManager;
 import android.net.wifi.WifiInfo;
 import android.provider.Settings;
 import android.telephony.TelephonyManager;
-import android.util.Log;
+
 import de.robv.android.xposed.IXposedHookLoadPackage;
-import de.robv.android.xposed.XposedHelpers;
+import de.robv.android.xposed.XC_MethodHook;
 import de.robv.android.xposed.callbacks.XC_LoadPackage;
 
 import java.net.NetworkInterface;
 
 public class XposedBridge implements IXposedHookLoadPackage {
 
-    private static final String TAG = "XposedBridge";
-
     @Override
     public void handleLoadPackage(XC_LoadPackage.LoadPackageParam lpparam) throws Throwable {
+        try {
+            findAndHookMethod(Application.class, "attach", Context.class, new XC_MethodHook() {
+                @Override
+                protected void afterHookedMethod(MethodHookParam param) throws Throwable {
+                    Context context = (Context) param.args[0];
+                    HookUtil.setApplication(context);
+                }
+            });
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
 
-        XposedHelpers.findAndHookMethod(WifiInfo.class, "getMacAddress", new CommonHook());
-        XposedHelpers.findAndHookMethod(NetworkInterface.class, "getHardwareAddress", new CommonHook());
-        XposedHelpers.findAndHookMethod(TelephonyManager.class, "getDeviceId", new CommonHook());
-        XposedHelpers.findAndHookMethod(TelephonyManager.class, "getImei", new CommonHook());
-        XposedHelpers.findAndHookMethod(TelephonyManager.class, "getSubscriberId", int.class, new CommonHook());
+        findAndHookMethod(WifiInfo.class, "getMacAddress", new CommonHook());
+        findAndHookMethod(NetworkInterface.class, "getHardwareAddress", new CommonHook());
+        findAndHookMethod(TelephonyManager.class, "getDeviceId", new CommonHook());
+        findAndHookMethod(TelephonyManager.class, "getImei", new CommonHook());
+        findAndHookMethod(TelephonyManager.class, "getSubscriberId", int.class, new CommonHook());
 
-        XposedHelpers.findAndHookMethod("android.app.ApplicationPackageManager", lpparam.classLoader, "getInstalledApplications", int.class, new CommonHook());
-        XposedHelpers.findAndHookMethod("android.app.ApplicationPackageManager", lpparam.classLoader, "getInstalledApplicationsAsUser", int.class, int.class, new CommonHook());
-        XposedHelpers.findAndHookMethod("android.app.ApplicationPackageManager", lpparam.classLoader, "getInstalledPackages", int.class, new CommonHook());
-        XposedHelpers.findAndHookMethod("android.app.ApplicationPackageManager", lpparam.classLoader, "getInstalledPackagesAsUser", int.class, int.class, new CommonHook());
-        XposedHelpers.findAndHookMethod("android.app.ApplicationPackageManager", lpparam.classLoader, "isInstantApp", new CommonHook());
-        XposedHelpers.findAndHookMethod("android.app.ApplicationPackageManager", lpparam.classLoader, "getInstantApps", new CommonHook());
+        findAndHookMethod("android.app.ApplicationPackageManager", lpparam.classLoader, "getInstalledApplications", int.class, new CommonHook());
+        findAndHookMethod("android.app.ApplicationPackageManager", lpparam.classLoader, "getInstalledApplicationsAsUser", int.class, int.class, new CommonHook());
+        findAndHookMethod("android.app.ApplicationPackageManager", lpparam.classLoader, "getInstalledPackages", int.class, new CommonHook());
+        findAndHookMethod("android.app.ApplicationPackageManager", lpparam.classLoader, "getInstalledPackagesAsUser", int.class, int.class, new CommonHook());
+        findAndHookMethod("android.app.ApplicationPackageManager", lpparam.classLoader, "isInstantApp", new CommonHook());
+        findAndHookMethod("android.app.ApplicationPackageManager", lpparam.classLoader, "getInstantApps", new CommonHook());
 
-        XposedHelpers.findAndHookMethod("android.app.ActivityManager", lpparam.classLoader, "getRunningAppProcesses", new CommonHook());
-        XposedHelpers.findAndHookMethod(Settings.Secure.class, "getString", ContentResolver.class, String.class, new CommonHook());
-        XposedHelpers.findAndHookMethod(Settings.Secure.class, "getStringForUser", ContentResolver.class, String.class, int.class, new CommonHook());
-        XposedHelpers.findAndHookMethod(LocationManager.class, "getLastKnownLocation", String.class, new CommonHook());
+        findAndHookMethod("android.app.ActivityManager", lpparam.classLoader, "getRunningAppProcesses", new CommonHook());
+        findAndHookMethod(Settings.Secure.class, "getString", ContentResolver.class, String.class, new CommonHook());
+        findAndHookMethod(Settings.Secure.class, "getStringForUser", ContentResolver.class, String.class, int.class, new CommonHook());
+        findAndHookMethod(LocationManager.class, "getLastKnownLocation", String.class, new CommonHook());
 
 //        Class intent = XposedHelpers.findClass("android.content.Intent", lpparam.classLoader);
 //        XposedHelpers.findAndHookMethod("android.app.ApplicationPackageManager", lpparam.classLoader,"resolveActivity", intent, int.class, new CommonHook());

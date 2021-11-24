@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.huiwan.interview">
+          package="com.bigwen.hegui">
 
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -59,7 +59,7 @@
     <uses-permission android:name="android.permission.WRITE_CALENDAR" />
 
     <application
-        android:name="com.bigwen.main.WPApplication"
+        android:name=".WPApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -74,16 +74,22 @@
         <meta-data android:name="xposeddescription" android:value="test xposed module" />
         <meta-data android:name="xposedminversion" android:value="54+" />
 
-
-        <activity android:name="com.bigwen.main.MainActicity">
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.bigwen.main.MainActicity1"
+        <activity android:name=".test.ToolActivity"/>
+        <activity android:name=".test.ChildActivity"
             android:process=":child"/>
+        <service android:name=".test.BigwenService"
+                 android:process=":bigwen">
+            <intent-filter>
+                <action android:name="com.bigwen" />
+            </intent-filter>
+        </service>
+        <service android:name=".DaemonService" />
     </application>
 
 </manifest>

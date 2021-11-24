@@ -1,4 +1,4 @@
-package com.bigwen.main;
+package com.bigwen.hegui.util;
 
 import android.app.ActivityManager;
 import android.app.Application;

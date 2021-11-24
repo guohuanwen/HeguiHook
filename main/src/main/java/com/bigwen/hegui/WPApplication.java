@@ -1,4 +1,4 @@
-package com.bigwen.main;
+package com.bigwen.hegui;
 
 import android.app.ActivityManager;
 import android.app.Application;
@@ -23,6 +23,11 @@ public class WPApplication extends Application {
                 e.printStackTrace();
             }
         }
+    }
+
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
     }
 
     private String processName;

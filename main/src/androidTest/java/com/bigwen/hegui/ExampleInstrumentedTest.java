@@ -1,4 +1,4 @@
-package com.bigwen.main;
+package com.bigwen.hegui;
 
 import android.content.Context;
 import androidx.test.platform.app.InstrumentationRegistry;

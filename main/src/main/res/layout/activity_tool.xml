@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:clipChildren="false"
+    android:background="#ffffff">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycle_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+    <TextView
+        android:id="@+id/start_child"
+        android:layout_width="100dp"
+        android:layout_height="60dp"
+        android:textColor="#333333"
+        android:text="子进程"
+        android:gravity="center"/>
+
+    <TextView
+        android:id="@+id/start_service"
+        android:layout_width="wrap_content"
+        android:layout_height="60dp"
+        android:textColor="#333333"
+        android:text="启动卧底service"
+        android:gravity="center"
+        android:layout_below="@id/start_child"/>
+
+    <TextView
+        android:id="@+id/start_service2"
+        android:layout_width="wrap_content"
+        android:layout_height="60dp"
+        android:textColor="#333333"
+        android:text="启动卧底友盟service"
+        android:gravity="center"
+        android:layout_below="@id/start_service"/>
+
+
+    <TextView
+        android:id="@+id/start_service3"
+        android:layout_width="wrap_content"
+        android:layout_height="60dp"
+        android:textColor="#333333"
+        android:text="启动卧底华为"
+        android:gravity="center"
+        android:layout_below="@id/start_service"/>
+
+    <TextView
+        android:id="@+id/start_service4"
+        android:layout_width="wrap_content"
+        android:layout_height="60dp"
+        android:textColor="#333333"
+        android:text="启动BigwenService"
+        android:gravity="center"
+        android:layout_below="@id/start_service"/>
+
+    <TextView
+        android:id="@+id/start_receiver"
+        android:layout_width="100dp"
+        android:layout_height="60dp"
+        android:textColor="#333333"
+        android:text="发广播"
+        android:gravity="center"
+        android:layout_below="@id/start_receiver"/>
+
+
+</LinearLayout>
