@@ -15,6 +15,30 @@ android {
         }
     }
 
+    signingConfigs {
+        releaseKeyStore {
+            storeFile file("./hook")
+            storePassword "hook123"
+            keyAlias "android"
+            keyPassword "hook123"
+            v2SigningEnabled true
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            shrinkResources false
+            signingConfig signingConfigs.releaseKeyStore
+        }
+        debug {
+            minifyEnabled false
+            shrinkResources false
+            signingConfig signingConfigs.releaseKeyStore
+        }
+    }
+
+
     buildTypes {
         release {
             minifyEnabled false

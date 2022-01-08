@@ -2,6 +2,7 @@ package com.bigwen.hegui.hook;
 
 import static de.robv.android.xposed.XposedHelpers.findAndHookMethod;
 import static de.robv.android.xposed.XposedHelpers.findClass;
+import static de.robv.android.xposed.XposedHelpers.findClassIfExists;
 
 import android.app.Application;
 import android.content.ContentResolver;
@@ -10,6 +11,7 @@ import android.location.LocationManager;
 import android.net.wifi.WifiInfo;
 import android.provider.Settings;
 import android.telephony.TelephonyManager;
+import android.widget.Toast;
 
 import de.robv.android.xposed.IXposedHookLoadPackage;
 import de.robv.android.xposed.XC_MethodHook;
@@ -27,10 +29,18 @@ public class XposedBridge implements IXposedHookLoadPackage {
                 protected void afterHookedMethod(MethodHookParam param) throws Throwable {
                     Context context = (Context) param.args[0];
                     HookUtil.setApplication(context);
+                    boolean trtc = findClassIfExists("com.tencent.txcopyrightedmedia.TXCopyrightedMedia", lpparam.classLoader) != null;
+                    boolean zego = findClassIfExists("im.zego.zegoexpress.ZegoCopyrightedMusic", lpparam.classLoader) != null;
+                    String msg = "zego " + zego + "\ntrtc " + trtc;
+                    Toast.makeText(context, msg, Toast.LENGTH_LONG).show();
                 }
             });
         } catch(Exception e) {
             e.printStackTrace();
+        }
+
+        if (true) {
+            return;
         }
 
         findAndHookMethod(WifiInfo.class, "getMacAddress", new CommonHook());
